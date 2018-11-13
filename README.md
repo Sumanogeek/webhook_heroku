@@ -1,2 +1,2 @@
 # webhook_heroku
-hot a webhook listener on heroku
+host a webhook listener on heroku
