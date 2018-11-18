@@ -1,17 +1,22 @@
 import json
 import datetime
 from flask import Flask, request, Response
+import pymongo
 
 app = Flask(__name__)
 
-##global master
 master = []
-dummy = []
+
+mongo_URI = "mongodb://pymomo:momo2py@ds033170.mlab.com:33170/try4mongo"
+client = pymongo.MongoClient(mongo_URI, connectTimeoutMS=30000)
+db = client.get_database("try4mongo")
+jiraDB = db.jiralogs
 
 @app.route('/rec', methods=['POST'])
 def indata():
     data = json.loads(request.data)
     print ("Data: ", data)
+    jiraDB.insert_one(data)
     master.append(data)
     return Response ("OK")
 
