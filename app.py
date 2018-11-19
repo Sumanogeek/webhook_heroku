@@ -5,8 +5,6 @@ import pymongo
 
 app = Flask(__name__)
 
-master = []
-
 mongo_URI = "mongodb://pymomo:momo2py@ds033170.mlab.com:33170/try4mongo"
 client = pymongo.MongoClient(mongo_URI, connectTimeoutMS=30000)
 db = client.get_database("try4mongo")
@@ -23,14 +21,6 @@ def indata():
 @app.route('/', methods=['GET'])
 def test():
     return Response('It works good!')
-
-@app.route('/print')
-def wrtfl():
-    opFile = "output"+str(datetime.datetime.now())+".json"
-    with open(opFile,'w') as op:
-        json.dump(master, op)
-    master.clear()
-    return Response("Written to file!")
 
 if __name__ == '__main__':
     app.run()
