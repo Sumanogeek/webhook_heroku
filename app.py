@@ -15,7 +15,6 @@ def indata():
     data = json.loads(request.data)
     print ("Data: ", data)
     jiraDB.insert_one(data)
-    master.append(data)
     return Response ("OK")
 
 @app.route('/', methods=['GET'])
