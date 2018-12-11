@@ -2,6 +2,7 @@ import json
 import datetime
 from flask import Flask, request, Response
 import pymongo
+import requests
 
 app = Flask(__name__)
 
@@ -15,6 +16,15 @@ def indata():
     data = json.loads(request.data)
     print ("Data: ", data)
     jiraDB.insert_one(data)
+    if data["issues"]["fields"]["priority"]["name"] == "Critical":
+        webhook_url = 'https://hooks.slack.com/services/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'
+        slmsg = "update to critical issue" + data["issues"]["key"]
+        slack_data = {'text': slmsg}
+
+        response = requests.post(
+            webhook_url, data=json.dumps(slack_data),
+            headers={'Content-Type': 'application/json'}
+        )
     return Response ("OK")
 
 @app.route('/', methods=['GET'])
