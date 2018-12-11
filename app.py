@@ -18,7 +18,7 @@ def indata():
     jiraDB.insert_one(data)
     if data["issue"]["fields"]["priority"]["name"] == "Critical":
         webhook_url = 'https://hooks.slack.com/services/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'
-        slmsg = "update to critical issue" + data["issues"]["key"]
+        slmsg = "update to critical issue" + data["issue"]["key"]
         slack_data = {'text': slmsg}
 
         response = requests.post(
